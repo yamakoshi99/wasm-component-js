@@ -1,0 +1,23 @@
+{
+  "name": "investment-simulator",
+  "version": "1.0.0",
+  "description": "投資シミュレーター - リスクとリターンを学ぶWebアプリケーション",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8080",
+    "build": "echo 'Build script not defined'",
+    "test": "echo 'Test script not defined'"
+  },
+  "keywords": [
+    "investment",
+    "simulator",
+    "education",
+    "finance",
+    "javascript"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
