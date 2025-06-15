@@ -49,7 +49,7 @@ function MiniGame2Component() {
                                 <div class="card-body">
                                     <small>
                                         <ol>
-                                            <li>画面に表示されるお金を正しいカテゴリにドラッグ</li>
+                                            <li>画面に表示されるお金を見て正しいカテゴリのボタンをクリック</li>
                                             <li>時間内により多く正解しよう</li>
                                             <li>連続正解でボーナス</li>
                                             <li>間違えるとペナルティ</li>
@@ -63,7 +63,7 @@ function MiniGame2Component() {
                             <div id="game-area">
                                 <div class="card mb-3">
                                     <div class="card-body text-center">
-                                        <div id="money-item" class="p-4 border rounded bg-light" style="min-height: 150px; display: flex; align-items: center; justify-content: center;">
+                                        <div id="money-item" class="p-4 border rounded bg-light" style="min-height: 150px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
                                             <div class="text-muted">ゲームを開始してください</div>
                                         </div>
                                     </div>
@@ -71,44 +71,44 @@ function MiniGame2Component() {
 
                                 <div class="row g-3" id="categories">
                                     <div class="col-md-3">
-                                        <div class="card drop-zone border-primary" data-category="coin"
-                                             ondrop="dropMoney(event)" ondragover="allowDrop(event)">
-                                            <div class="card-body text-center">
-                                                <i class="bi bi-coin display-4 text-primary"></i>
-                                                <h6 class="mt-2">硬貨</h6>
+                                        <button class="btn btn-outline-primary w-100 h-100 category-button"
+                                                data-category="coin" onclick="selectCategory('coin')" style="min-height: 120px;">
+                                            <div class="d-flex flex-column align-items-center">
+                                                <i class="bi bi-coin display-4 text-primary mb-2"></i>
+                                                <h6>硬貨</h6>
                                                 <small class="text-muted">1円, 5円, 10円,<br>50円, 100円, 500円</small>
                                             </div>
-                                        </div>
+                                        </button>
                                     </div>
                                     <div class="col-md-3">
-                                        <div class="card drop-zone border-success" data-category="bill"
-                                             ondrop="dropMoney(event)" ondragover="allowDrop(event)">
-                                            <div class="card-body text-center">
-                                                <i class="bi bi-cash display-4 text-success"></i>
-                                                <h6 class="mt-2">紙幣</h6>
+                                        <button class="btn btn-outline-success w-100 h-100 category-button"
+                                                data-category="bill" onclick="selectCategory('bill')" style="min-height: 120px;">
+                                            <div class="d-flex flex-column align-items-center">
+                                                <i class="bi bi-cash display-4 text-success mb-2"></i>
+                                                <h6>紙幣</h6>
                                                 <small class="text-muted">1000円, 2000円,<br>5000円, 10000円</small>
                                             </div>
-                                        </div>
+                                        </button>
                                     </div>
                                     <div class="col-md-3">
-                                        <div class="card drop-zone border-warning" data-category="electronic"
-                                             ondrop="dropMoney(event)" ondragover="allowDrop(event)">
-                                            <div class="card-body text-center">
-                                                <i class="bi bi-credit-card display-4 text-warning"></i>
-                                                <h6 class="mt-2">電子マネー</h6>
+                                        <button class="btn btn-outline-warning w-100 h-100 category-button"
+                                                data-category="electronic" onclick="selectCategory('electronic')" style="min-height: 120px;">
+                                            <div class="d-flex flex-column align-items-center">
+                                                <i class="bi bi-credit-card display-4 text-warning mb-2"></i>
+                                                <h6>電子マネー</h6>
                                                 <small class="text-muted">ICカード, QRコード,<br>クレジットカード</small>
                                             </div>
-                                        </div>
+                                        </button>
                                     </div>
                                     <div class="col-md-3">
-                                        <div class="card drop-zone border-info" data-category="digital"
-                                             ondrop="dropMoney(event)" ondragover="allowDrop(event)">
-                                            <div class="card-body text-center">
-                                                <i class="bi bi-phone display-4 text-info"></i>
-                                                <h6 class="mt-2">デジタル</h6>
+                                        <button class="btn btn-outline-info w-100 h-100 category-button"
+                                                data-category="digital" onclick="selectCategory('digital')" style="min-height: 120px;">
+                                            <div class="d-flex flex-column align-items-center">
+                                                <i class="bi bi-phone display-4 text-info mb-2"></i>
+                                                <h6>デジタル</h6>
                                                 <small class="text-muted">スマホ決済,<br>仮想通貨</small>
                                             </div>
-                                        </div>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -262,56 +262,49 @@ function showNextMoney() {
 
     const moneyItemDiv = document.getElementById('money-item');
     moneyItemDiv.innerHTML = `
-        <div class="draggable-money p-3 border rounded bg-white shadow-sm"
-             draggable="true"
-             ondragstart="dragStart(event)"
-             style="cursor: grab; min-width: 200px;">
-            <i class="bi ${randomItem.icon} display-4 ${randomItem.color}"></i>
-            <h5 class="mt-2 mb-0">${randomItem.name}</h5>
+        <div class="money-display p-4 border rounded bg-white shadow-sm"
+             style="min-width: 200px;">
+            <i class="bi ${randomItem.icon} display-3 ${randomItem.color}"></i>
+            <h4 class="mt-3 mb-2">${randomItem.name}</h4>
+            <p class="text-muted mb-0">この支払い方法の種類を選んでください</p>
         </div>
     `;
 }
 
-// ドラッグ開始
-function dragStart(event) {
-    event.dataTransfer.setData("text/plain", "money");
-}
-
-// ドロップ許可
-function allowDrop(event) {
-    event.preventDefault();
-
-    // ドラッグオーバー時の視覚効果
-    const dropZone = event.currentTarget;
-    dropZone.classList.add('bg-light');
-}
-
-// ドラッグ離脱時
-document.addEventListener('dragleave', function(event) {
-    if (event.target.classList.contains('drop-zone')) {
-        event.target.classList.remove('bg-light');
-    }
-});
-
-// ドロップ処理
-function dropMoney(event) {
-    event.preventDefault();
-
-    const dropZone = event.currentTarget;
-    dropZone.classList.remove('bg-light');
-
+// カテゴリ選択処理（ボタンクリック）
+function selectCategory(selectedCategory) {
     if (!window.game2State.isPlaying || !window.game2State.currentItem) return;
 
-    const droppedCategory = dropZone.getAttribute('data-category');
     const correctCategory = window.game2State.currentItem.category;
 
-    if (droppedCategory === correctCategory) {
+    // 選択されたボタンを一時的にハイライト
+    const buttons = document.querySelectorAll('.category-button');
+    buttons.forEach(btn => btn.classList.remove('btn-success', 'btn-danger'));
+
+    const selectedButton = document.querySelector(`[data-category="${selectedCategory}"]`);
+
+    if (selectedCategory === correctCategory) {
         // 正解
+        selectedButton.classList.add('btn-success');
         handleCorrectAnswer();
     } else {
         // 不正解
+        selectedButton.classList.add('btn-danger');
         handleWrongAnswer();
     }
+
+    // 0.5秒後にボタンの色をリセット
+    setTimeout(() => {
+        buttons.forEach(btn => {
+            btn.classList.remove('btn-success', 'btn-danger');
+            btn.className = btn.className.replace(/btn-outline-\w+/,
+                btn.getAttribute('data-category') === 'coin' ? 'btn-outline-primary' :
+                btn.getAttribute('data-category') === 'bill' ? 'btn-outline-success' :
+                btn.getAttribute('data-category') === 'electronic' ? 'btn-outline-warning' :
+                'btn-outline-info'
+            );
+        });
+    }, 500);
 }
 
 // 正解処理
@@ -427,3 +420,9 @@ function restartGame() {
     document.getElementById('game-result-2').style.display = 'none';
     initializeMiniGame2();
 }
+
+// グローバルスコープに関数を登録（HTMLのonclickから呼び出せるように）
+window.selectCategory = selectCategory;
+window.startGame = startGame;
+window.pauseGame = pauseGame;
+window.restartGame = restartGame;
